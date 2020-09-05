@@ -14,28 +14,58 @@ struct Q<T>:Equatable where T: Equatable {
     
     var value:T
     var next:String
+    func map<U>(_ transform:(T) -> U) -> Q<U> {
+        Q<U>(transform(value), next)
+    }
 }
 //typealias Q<T> = (T, String)
 typealias QS<T> = [Q<T>] where T:Equatable
-func someDigit(_ str:String) -> QS<UInt> {
-    
-    //    [
-    parse(str,some: IsNumber())
-    //    ].compactMap{$0}
-    
-    //    return []// UInt(i >= 0 ? i : 0)
-}
 
-//func someInt(_ str:String) ->Int {
-//    var str = str
-//    let c = str.removeFirst()
-//
-//}
+struct MathParser {
+    
+    
+    func nat(_ str:String) -> QS<UInt> {
+        parse(str,some: IsNumber())
+    }
+    
+    func int(_ str:String) -> QS<Int> {
+        if str.isEmpty {return []}
+        let q_of_sign = parse(str, IsChar(),
+                               with: "-")
+        let isNat = q_of_sign.isEmpty
+        switch isNat {
+        case true:
+            return self.nat(str).map{
+                q in
+                q.map{Int($0)}}
+        case false:
+            let str = str.dropFirst().description
+            let qs =
+                self.nat(str).map{
+                    q in
+                    q.map{Int($0)}}
+            guard let q = qs.first else {return []}
+            return [q.map{$0 * -1}]
+        }
+    }
+}
 
 func parse<L>(_ str:String,_ logic:L) -> QS<L.Output>
 where L:Logic {
     guard let c = str.first,
           logic.logic(c)
+    else {return []}
+    
+    let str = str.dropFirst().description
+    return [Q(logic.transform(c.description), str)]
+}
+func parse<L>(
+          _ str:String,
+        _ logic:L,
+    with expect: L.Output) -> QS<L.Output>
+where L:Logic,L.Output: Comparable, L.Output: CustomStringConvertible {
+    guard let c = str.first,
+          logic.only(c, expect: expect)
     else {return []}
     
     let str = str.dropFirst().description
@@ -56,30 +86,5 @@ where L:Logic
         value = value.add(q.value)
         str = q.next
         _qs = [Q(value, str)]
-    }
-}
-
-
-struct IsNumber: Logic {
-    typealias Output = UInt
-    static var defaultValue: UInt {0}
-    func logic(_ c: Character) -> Bool {
-        return "1234567890".contains(c)
-    }
-    func transform(_ s: String) -> Output {
-        Output(s) ?? 0
-    }
-}
-
-
-struct IsChar:Logic {
-    
-    static var defaultValue: String {""}
-    typealias Output = String
-    func transform(_: String) -> Output {
-        "0"
-    }
-    func logic(_ c: Character) -> Bool {
-        c.asciiValue != nil
     }
 }

@@ -32,6 +32,7 @@ final class FunctionalParserTests: XCTestCase {
         XCTAssertTrue(parseResult.isEmpty, "should be empty but fonud: \(parseResult)")
         
     }
+
     func test_parse_Will_some_failure_with_prefix_success() throws {
         let logic = IsNumber()
         let parseResult = try XCTUnwrap(parse("1abc", some: logic).first)
@@ -40,11 +41,19 @@ final class FunctionalParserTests: XCTestCase {
         
     }
   
-    func testSomeDigit() {
-        XCTAssertEqual(someDigit("123"), [Q(123,"")])
-        XCTAssertEqual(someDigit("1abc"), [Q(1,"abc")])
-        XCTAssertEqual(someDigit("-123"), [])
+    func testNat() {
+        let p = MathParser()
+        XCTAssertEqual(p.nat("123"), [Q(123,"")])
+        XCTAssertEqual(p.nat("1abc"), [Q(1,"abc")])
+        XCTAssertEqual(p.nat("-123"), [])
+        XCTAssertEqual(p.nat("abc"), [])
     }
-    
+    func testInt() {
+        let p = MathParser()
+        XCTAssertEqual(p.int("123"), [Q(123,"")])
+        XCTAssertEqual(p.int("1abc"), [Q(1,"abc")])
+        XCTAssertEqual(p.int("-123"), [Q(-123,"")])
+        XCTAssertEqual(p.int("abc"), [])
+    }
 }
 

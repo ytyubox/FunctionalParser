@@ -27,3 +27,12 @@ extension UInt:NextAble{
         self + v
     }
 }
+
+extension String: NextAble {
+    func next() -> String {
+        self
+    }
+    func add(_ c: String) -> String{
+        self + String(c)
+    }
+}

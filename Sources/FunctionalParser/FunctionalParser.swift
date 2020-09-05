@@ -16,12 +16,14 @@ struct Q<T>:Equatable where T: Equatable {
     var next:String
 }
 //typealias Q<T> = (T, String)
-typealias P<T> = [Q<T>] where T:Equatable
-func someDigit(_ str:String) -> P<UInt> {
+typealias QS<T> = [Q<T>] where T:Equatable
+func someDigit(_ str:String) -> QS<UInt> {
     
-    [parse(str, IsNumber())].compactMap{$0}
-        
-//    return []// UInt(i >= 0 ? i : 0)
+    //    [
+    parse(str,some: IsNumber())
+    //    ].compactMap{$0}
+    
+    //    return []// UInt(i >= 0 ? i : 0)
 }
 
 //func someInt(_ str:String) ->Int {
@@ -29,29 +31,38 @@ func someDigit(_ str:String) -> P<UInt> {
 //    let c = str.removeFirst()
 //
 //}
-protocol Logic {
-    associatedtype Output
-    func logic(_:Character) -> Bool
-    func transform(_:String) -> Output
+
+func parse<L>(_ str:String,_ logic:L) -> QS<L.Output>
+where L:Logic {
+    guard let c = str.first,
+          logic.logic(c)
+    else {return []}
+    
+    let str = str.dropFirst().description
+    return [Q(logic.transform(c.description), str)]
 }
-func parse<L>(_ str:String,_ logic:L) -> Q<L.Output>?
+func parse<L>(_ str:String,some logic:L) -> QS<L.Output>
 where L:Logic
 {
-    var o = [Character]()
-    var copy = str
-    for c in str {
-        guard logic.logic(c) else  {
-            break
+    var str = str
+    var value:L.Output = L.defaultValue
+    var _qs = [Q<L.Output>]()
+    while true {
+        let qs = parse(str, logic)
+        guard let q = qs.first else {
+            return _qs
         }
-        o.append(copy.removeFirst())
+        value =  value.next()
+        value = value.add(q.value)
+        str = q.next
+        _qs = [Q(value, str)]
     }
-    if o.isEmpty {return nil}
-    let v = String(o)
-    return Q(logic.transform(v), copy)
 }
+
 
 struct IsNumber: Logic {
     typealias Output = UInt
+    static var defaultValue: UInt {0}
     func logic(_ c: Character) -> Bool {
         return "1234567890".contains(c)
     }

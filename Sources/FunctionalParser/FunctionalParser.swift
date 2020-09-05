@@ -80,8 +80,6 @@ struct IsChar:Logic {
         "0"
     }
     func logic(_ c: Character) -> Bool {
-        let v = c.asciiValue ?? 0
-        return (65...90).contains(v) ||
-            (97...122).contains(v)
+        c.asciiValue != nil
     }
 }

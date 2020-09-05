@@ -16,21 +16,18 @@ class IsTests:XCTestCase {
             XCTAssertTrue(logicResult)
             let transformOutput = isNumber.transform("\(c)")
             XCTAssertEqual(transformOutput, i)
+            let onlyResult = isNumber.only(c, expect: i)
+            XCTAssertTrue(onlyResult)
         }
     }
     func testIsChar() throws {
-        let A = try XCTUnwrap(Character("A").asciiValue)
-        let Z = try XCTUnwrap(Character("Z").asciiValue)
-        let a = try XCTUnwrap(Character("a").asciiValue)
-        let z = try XCTUnwrap(Character("z").asciiValue)
+       
         let logic = IsChar()
-        for i in A...Z {
+        for i:UInt8 in 32...126 {
             let c = Character(UnicodeScalar(i))
-            XCTAssertTrue(logic.logic(c))
-        }
-        for j in a...z {
-            let c = Character(UnicodeScalar(j))
-            XCTAssertTrue(logic.logic(c))
+            XCTAssertTrue(logic.logic(c), "expect c:\(c) is a char, but fail")
+            let onlyResult = logic.only(c, expect: c.description)
+            XCTAssertTrue(onlyResult, "expect c:\(c) is a char, but fail")
         }
     }
 }

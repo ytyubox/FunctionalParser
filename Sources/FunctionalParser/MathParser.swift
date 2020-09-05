@@ -1,11 +1,10 @@
-struct MathParser {
-    
-    
-    func nat(_ str:String) -> QS<UInt> {
+public struct MathParser {
+    public init() { }
+    public func nat(_ str:String) -> QS<UInt> {
         parse(str,some: IsNumber())
     }
     
-    func int(_ str:String) -> QS<Int> {
+    public func int(_ str:String) -> QS<Int> {
         if str.isEmpty {return []}
         let q_of_sign = parse(str, IsChar(),
                                with: "-")

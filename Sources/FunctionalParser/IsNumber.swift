@@ -1,18 +1,11 @@
-//
-//  File.swift
-//  
-//
-//  Created by 游宗諭 on 2020/9/5.
-//
-
-
-struct IsNumber: Logic {
-    typealias Output = UInt
-    static var defaultValue: UInt {0}
-    func logic(_ c: Character) -> Bool {
+public struct IsNumber: Logic {
+    public init() {}
+    public typealias Output = UInt
+    public static var defaultValue: UInt {0}
+    public func logic(_ c: Character) -> Bool {
         return "1234567890".contains(c)
     }
-    func transform(_ s: String) -> Output {
+    public func transform(_ s: String) -> Output {
         Output(s) ?? 0
     }
 }

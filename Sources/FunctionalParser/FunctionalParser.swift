@@ -1,8 +1,8 @@
 
-typealias QS<T> = [Q<T>] where T:Equatable
+public typealias QS<T> = [Q<T>] where T:Equatable
 
 
-func parse<L>(_ str:String,_ logic:L) -> QS<L.Output>
+public func parse<L>(_ str:String,_ logic:L) -> QS<L.Output>
 where L:Logic {
     guard let c = str.first,
           logic.logic(c)
@@ -12,7 +12,7 @@ where L:Logic {
     return [Q(logic.transform(c.description), str)]
 }
 
-func parse<L>(
+public func parse<L>(
           _ str:String,
         _ logic:L,
     with expect: L.Output) -> QS<L.Output>
@@ -25,7 +25,7 @@ where L:Logic,L.Output: Comparable, L.Output: CustomStringConvertible {
     return [Q(logic.transform(c.description), str)]
 }
 
-func parse<L>(_ str:String,some logic:L) -> QS<L.Output>
+public func parse<L>(_ str:String,some logic:L) -> QS<L.Output>
 where L:Logic
 {
     var str = str

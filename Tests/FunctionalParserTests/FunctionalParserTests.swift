@@ -1,5 +1,5 @@
 import XCTest
-@testable import FunctionalParser
+import FunctionalParser
 
 final class FunctionalParserTests: XCTestCase {
    

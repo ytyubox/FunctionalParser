@@ -1,6 +1,6 @@
 public struct MathParser {
     public init() { }
-    public func nat(_ str:String) -> QS<UInt> {
+    public func nat<S:LosslessStringConvertible>(_ str:S) -> QS<UInt> {
         parse(str,some: IsNumber())
     }
     
@@ -15,7 +15,7 @@ public struct MathParser {
                 q in
                 q.map{Int($0)}}
         case false:
-            let str = str.dropFirst().description
+            let str = str.dropFirst()
             let qs =
                 self.nat(str).map{
                     q in

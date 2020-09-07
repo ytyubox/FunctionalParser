@@ -1,7 +1,8 @@
-public struct Q<T>:Equatable where T: Equatable {
-    public init(_ value: T, _ next: String) {
+public struct Q<T>:Equatable
+where T: Equatable {
+    public init(_ value: T, _ next: LosslessStringConvertible) {
         self.value = value
-        self.next = next
+        self.next = next.description
     }
     
     public var value:T

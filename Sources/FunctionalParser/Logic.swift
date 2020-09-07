@@ -2,7 +2,7 @@ public protocol Logic {
     static var defaultValue:Output {get}
     associatedtype Output:NextAble
     func logic(_:Character) -> Bool
-    func transform(_:String) -> Output
+    func transform<S:LosslessStringConvertible>(_:S) -> Output
 }
 public extension Logic where Output: Equatable,Output: CustomStringConvertible {
     func only(_ c:Character, expect: Output) -> Bool {

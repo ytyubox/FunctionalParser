@@ -2,14 +2,14 @@
 public typealias QS<T> = [Q<T>] where T:Equatable
 
 
-public func parse<L>(_ str:String,_ logic:L) -> QS<L.Output>
-where L:Logic {
-    guard let c = str.first,
+public func parse<L,S>(_ str:S,_ logic:L) -> QS<L.Output>
+    where L:Logic,S:LosslessStringConvertible {
+        guard let c = str.description.first,
           logic.logic(c)
     else {return []}
     
-    let str = str.dropFirst().description
-    return [Q(logic.transform(c.description), str)]
+        let str = str.description.dropFirst()
+    return [Q(logic.transform(c), str)]
 }
 
 public func parse<L>(
@@ -21,14 +21,14 @@ where L:Logic,L.Output: Comparable, L.Output: CustomStringConvertible {
           logic.only(c, expect: expect)
     else {return []}
     
-    let str = str.dropFirst().description
-    return [Q(logic.transform(c.description), str)]
+    let str = str.dropFirst()
+    return [Q(logic.transform(c), str)]
 }
 
-public func parse<L>(_ str:String,some logic:L) -> QS<L.Output>
-where L:Logic
+public func parse<L,S>(_ str:S,some logic:L) -> QS<L.Output>
+    where L:Logic,S: LosslessStringConvertible
 {
-    var str = str
+    var str = str.description
     var value:L.Output = L.defaultValue
     var _qs = [Q<L.Output>]()
     while true {

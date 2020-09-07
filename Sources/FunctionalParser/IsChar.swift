@@ -1,6 +1,6 @@
 public struct IsChar:Logic {
-    public func transform<S>(_: S) -> String where S : LosslessStringConvertible {
-        "0"
+    public func transform<S>(_ s: S) -> String where S : LosslessStringConvertible {
+        Output(s)
     }
     
     

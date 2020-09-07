@@ -1,6 +1,6 @@
 public protocol Logic {
     static var defaultValue:Output {get}
-    associatedtype Output:NextAble
+    associatedtype Output:NextAble, LosslessStringConvertible
     func logic(_:Character) -> Bool
     func transform<S:LosslessStringConvertible>(_:S) -> Output
 }

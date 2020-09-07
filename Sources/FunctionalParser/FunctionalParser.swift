@@ -16,7 +16,7 @@ public func parse<L>(
           _ str:String,
         _ logic:L,
     with expect: L.Output) -> QS<L.Output>
-where L:Logic,L.Output: Comparable, L.Output: CustomStringConvertible {
+where L:Logic,L.Output: Comparable {
     guard let c = str.first,
           logic.only(c, expect: expect)
     else {return []}
@@ -26,7 +26,7 @@ where L:Logic,L.Output: Comparable, L.Output: CustomStringConvertible {
 }
 
 public func parse<L,S>(_ str:S,some logic:L) -> QS<L.Output>
-    where L:Logic,S: LosslessStringConvertible
+    where L:Logic, S: LosslessStringConvertible
 {
     var str = str.description
     var value:L.Output = L.defaultValue

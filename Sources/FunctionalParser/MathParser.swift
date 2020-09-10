@@ -24,4 +24,14 @@ public struct MathParser {
             return [q.map{$0 * -1}]
         }
     }
+    public func factor(_ str:String) -> QS<Int> {
+        []
+    }
+    
+    public func expr(_ str: String) -> QS<Int> {
+        []
+    }
+    public func term(_ str: String) -> QS<Int> {
+        []
+    }
 }

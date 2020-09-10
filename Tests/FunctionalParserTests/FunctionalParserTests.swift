@@ -55,5 +55,11 @@ final class FunctionalParserTests: XCTestCase {
         XCTAssertEqual(p.int("-123"), [Q(-123,"")])
         XCTAssertEqual(p.int("abc"), [])
     }
+    func testFactor() {
+        let p = MathParser()
+        XCTAssertEqual(p.expr("1 + 1"), [Q(2,"")])
+        XCTAssertEqual(p.factor("(2)"), [Q(2,"")])
+        XCTAssertEqual(p.term("2 * 1"), [Q(2,"")])
+    }
 }
 

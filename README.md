@@ -26,7 +26,7 @@ parse (digit <|> letter) "abc123"
 parse (some (digit <|> letter)) "abc123"
 [("abc123", "")]
 ```
-### Math parse logic
+### Math parsing logic
 
 ```Haskell
 nat = do xs <- some digit

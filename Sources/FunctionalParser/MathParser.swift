@@ -7,7 +7,7 @@ public struct MathParser {
     public func int(_ str:String) -> QS<Int> {
         if str.isEmpty {return []}
         let q_of_sign = parse(str, IsChar(),
-                               with: "-")
+                              with: "-")
         let isNat = q_of_sign.isEmpty
         switch isNat {
         case true:
@@ -24,8 +24,28 @@ public struct MathParser {
             return [q.map{$0 * -1}]
         }
     }
+    /// (x) -> x
+    /// do char '('
+    ///   x <- expr
+    ///   char '('
+    ///   return x
+    ///<|> int
+    ///
+    ///
+    ///
+    ///
     public func factor(_ str:String) -> QS<Int> {
-        []
+        guard !str.isEmpty else {return []}
+        let charLogic = IsChar()
+        guard
+            let leading = parse(str, charLogic, with: "(").first,
+            let int = int(leading.next).first,
+            let trailing = parse(int.next, charLogic, with: ")").first,
+            trailing.next == ""
+        else {
+            return []
+        }
+        return [Q(int.value,"")]
     }
     
     public func expr(_ str: String) -> QS<Int> {

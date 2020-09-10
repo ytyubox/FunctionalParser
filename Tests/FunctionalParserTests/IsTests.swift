@@ -12,7 +12,7 @@ class IsTests:XCTestCase {
         let isNumber = IsNumber()
         for i:UInt in 0...9 {
             let c = Character("\(i)")
-            let logicResult = isNumber.logic(c)
+            let logicResult = isNumber.satisfy(c)
             XCTAssertTrue(logicResult)
             let transformOutput = isNumber.transform("\(c)")
             XCTAssertEqual(transformOutput, i)
@@ -25,7 +25,7 @@ class IsTests:XCTestCase {
         let logic = IsChar()
         for i:UInt8 in 32...126 {
             let c = Character(UnicodeScalar(i))
-            XCTAssertTrue(logic.logic(c), "expect c:\(c) is a char, but fail")
+            XCTAssertTrue(logic.satisfy(c), "expect c:\(c) is a char, but fail")
             let onlyResult = logic.only(c, expect: c.description)
             XCTAssertTrue(onlyResult, "expect c:\(c) is a char, but fail")
         }

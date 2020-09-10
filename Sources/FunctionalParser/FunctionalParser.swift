@@ -5,7 +5,7 @@ public typealias QS<T> = [Q<T>] where T:Equatable
 public func parse<L,S>(_ str:S,_ logic:L) -> QS<L.Output>
     where L:Logic,S:LosslessStringConvertible {
         guard let c = str.description.first,
-          logic.logic(c)
+          logic.satisfy(c)
     else {return []}
     
         let str = str.description.dropFirst()

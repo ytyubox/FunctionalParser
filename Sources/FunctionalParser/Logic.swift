@@ -1,12 +1,12 @@
 public protocol Logic {
     static var defaultValue:Output {get}
     associatedtype Output:NextAble, LosslessStringConvertible
-    func logic(_:Character) -> Bool
+    func satisfy(_:Character) -> Bool
     func transform<S:LosslessStringConvertible>(_:S) -> Output
 }
 public extension Logic where Output: Equatable,Output: CustomStringConvertible {
     func only(_ c:Character, expect: Output) -> Bool {
-        guard logic(c) else {return false}
+        guard satisfy(c) else {return false}
         return expect.description == c.description
     }
 }
@@ -30,6 +30,6 @@ extension String: NextAble {
         self
     }
     public func add(_ c: String) -> String{
-        self + String(c)
+        self + c
     }
 }

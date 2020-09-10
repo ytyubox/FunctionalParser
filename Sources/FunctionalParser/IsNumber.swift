@@ -6,7 +6,8 @@ public struct IsNumber: Logic {
     public init() {}
     public typealias Output = UInt
     public static var defaultValue: UInt {0}
-    public func logic(_ c: Character) -> Bool {
+   
+    public func satisfy(_ c: Character) -> Bool {
         return "1234567890".contains(c)
     }
 }

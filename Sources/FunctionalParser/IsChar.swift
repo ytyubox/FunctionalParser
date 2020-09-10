@@ -6,7 +6,7 @@ public struct IsChar:Logic {
     
     public static var defaultValue: String {""}
     public typealias Output = String
-    public func logic(_ c: Character) -> Bool {
+    public func satisfy(_ c: Character) -> Bool {
         c.asciiValue != nil
     }
 }

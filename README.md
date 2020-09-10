@@ -44,15 +44,15 @@ However, I really don't know anything about Haskell and the parse tool, please f
 
 ```swift
 let p = MathParser()
-p.nat("123") //  [Q(123,"")]
-p.nat("1abc") //  [Q(1,"abc")]
-p.nat("-123") //  []
-p.nat("abc") //  []
+p.nat("123")        //  [Q(123,"")]
+p.nat("1abc")       //  [Q(1,"abc")]
+p.nat("-123")       //  []
+p.nat("abc")        //  []
 
-p.int("123") // [Q(123,"")]
-p.int("1abc") // [Q(1,"abc")]
-p.int("-123") // [Q(-123,"")]
-p.int("abc") // []
+p.int("123")        // [Q(123,"")]
+p.int("1abc")       // [Q(1,"abc")]
+p.int("-123")       // [Q(-123,"")]
+p.int("abc")        // []
 
 p.expr("1+1")       // [Q(2,"")]
 p.factor("(2)")     // [Q(2,"")]

@@ -1,4 +1,4 @@
-public struct Q<T>:Equatable
+public struct Q<T>:Equatable, CustomStringConvertible
 where T: Equatable {
     public init(_ value: T, _ next: LosslessStringConvertible) {
         self.value = value
@@ -10,4 +10,5 @@ where T: Equatable {
     public func map<U>(_ transform:(T) -> U) -> Q<U> {
         Q<U>(transform(value), next)
     }
+    public var description: String {"\(value), \(next)"}
 }

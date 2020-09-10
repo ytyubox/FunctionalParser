@@ -57,9 +57,15 @@ final class FunctionalParserTests: XCTestCase {
     }
     func testFactor() {
         let p = MathParser()
-        XCTAssertEqual(p.expr("1 + 1"), [Q(2,"")])
+        XCTAssertEqual(p.expr("1+1"), [Q(2,"")])
         XCTAssertEqual(p.factor("(2)"), [Q(2,"")])
-        XCTAssertEqual(p.term("2 * 1"), [Q(2,"")])
+        XCTAssertEqual(p.term("2*1"), [Q(2,"")])
+    }
+    func testParse() {
+        let p = MathParser()
+        XCTAssertEqual(p.expr("1+2*2"), [Q(5,"")])
+        XCTAssertEqual(p.expr("2*2+1"), [Q(5,"")])
+        XCTAssertEqual(p.expr("2*(1+1)+1"), [Q(5,"")])
     }
 }
 
